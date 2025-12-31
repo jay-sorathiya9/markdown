@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Markdown Editor</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body { font-family: sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; }
+        header { background: #333; color: white; padding: 1rem; text-align: center; }
+        
+        .container { display: flex; flex: 1; overflow: hidden; }
+        
+        /* Left Side: Input */
+        #editor {
+            flex: 1;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            border: none;
+            border-right: 1px solid #ddd;
+            outline: none;
+            resize: none;
+        }
+
+        /* Right Side: Preview */
+        #preview {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+
+        /* Styling the rendered HTML */
+        #preview h1 { border-bottom: 1px solid #ccc; }
+        #preview code { background: #eee; padding: 2px 4px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Markdown Live Preview</h1>
+</header>
+
+<div class="container">
+    <textarea id="editor" placeholder="Type your markdown here..."># Hello World
+Try typing some **bold text** or a [link](https://google.com)!</textarea>
+    <div id="preview"></div>
+</div>
+
+<script>
+    const editor = document.getElementById('editor');
+    const preview = document.getElementById('preview');
+
+    // Function to update preview
+    function updatePreview() {
+        const rawValue = editor.value;
+        preview.innerHTML = marked.parse(rawValue);
+    }
+
+    // Listen for typing
+    editor.addEventListener('input', updatePreview);
+
+    // Initial render
+    updatePreview();
+</script>
+
+</body>
+</html>
